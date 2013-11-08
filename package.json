@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/Industrial/id-FSM/issues"
   },
-  "homepage": "https://github.com/Industrial/id-FSM"
+  "homepage": "https://github.com/Industrial/id-FSM",
+  "dependencies": {
+    "async": "~0.2.9"
+  },
+  "devDependencies": {
+    "type-check": "~0.3.0"
+  }
 }
