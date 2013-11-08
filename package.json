@@ -1,0 +1,26 @@
+{
+  "name": "id-FSM",
+  "version": "0.1.0",
+  "description": "Small Finite State Machine implementation with LiveScript for controlling (async) flow.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Industrial/id-FSM.git"
+  },
+  "keywords": [
+    "fsm",
+    "livescript"
+  ],
+  "author": "Tom Wieland <tom.wieland@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/Industrial/id-FSM/issues"
+  },
+  "homepage": "https://github.com/Industrial/id-FSM"
+}
