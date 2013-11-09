@@ -2,8 +2,6 @@ require! <[ async ]>
 
 { EventEmitter } = require 'events'
 
-#log = console~log
-
 export class State extends EventEmitter
   (@fsm = null, @name, options) ->
     @enter-middleware = []
@@ -28,12 +26,7 @@ export class State extends EventEmitter
           @leave-using v.leave
 
   # Enters the state
-  #
-  # enter :: Undefined -> Undefined
-  #
   enter: !->
-    #log 'State#enter', @name
-
     if @attach-target?
       for k, v of @events
         @attach-target[k] = v
@@ -43,12 +36,7 @@ export class State extends EventEmitter
     @emit 'entered'
 
   # Leaves the state
-  #
-  # leave :: Undefined -> Undefined
-  #
   leave: !->
-    #log 'State#leave', @name
-
     <~! async.series @leave-middleware
 
     if @attach-target?
@@ -58,30 +46,15 @@ export class State extends EventEmitter
     @emit 'left'
 
   # Adds handler to the enter callback chain.
-  #
-  # enter-using :: Function -> Undefined
-  #
   enter-using: (fn) !->
-    #log 'State#enter-using', @name, fn
-
     @enter-middleware.unshift fn
 
   # Adds handler to the leave callback chain.
-  #
-  # leave-using :: Function -> Undefined
-  #
   leave-using: (fn) !->
-    #log 'State#leave-using', @name, fn
-
     @leave-middleware.unshift fn
 
   # Calls an event function.
-  #
-  # trigger :: String -> ... -> Undefined
-  #
   trigger: (event, ...args) !->
-    #log 'State#trigger', @name, event, ...args
-
     handler = @events[event]
 
     if handler?
@@ -92,10 +65,5 @@ export class State extends EventEmitter
   # may be defined on the State. It is here because event functions are bound to
   # the state. By calling this method the state machine can change from state to
   # state declaratively.
-  #
-  # transition :: ... -> Undefined
-  #
   transition: (...args) !->
-    #log 'State#transition', @name, ...args
-
     @fsm?.transition ...args
