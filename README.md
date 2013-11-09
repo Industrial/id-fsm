@@ -10,6 +10,7 @@ Small Finite State Machine implementation using LiveScript mainly for controllin
 
 ### Simple example
 
+```js
     var idFSM = require('id-fsm');
 
     var trafficLight = new idFSM.StateMachine({
@@ -49,12 +50,14 @@ Small Finite State Machine implementation using LiveScript mainly for controllin
     trafficLight.trigger('goGreen');
     trafficLight.trigger('goOrange');
     trafficLight.trigger('goRed');
+```
 
 ### Enter and Leave handlers
 
 When a state is entered or left, if an enter or leave property was defined for
 the state, it will call it before entering and after leaving the state.
 
+```js
     var idFSM = require('id-fsm');
 
     var trafficLight = new idFSM.StateMachine({
@@ -104,12 +107,14 @@ the state, it will call it before entering and after leaving the state.
     trafficLight.trigger('goGreen');
     trafficLight.trigger('goOrange');
     trafficLight.trigger('goRed');
+```
 
 ### Enter and Leave middleware
 
 You can define middleware for states that will be ran when entering or leaving
 a state to decorate that state with behaviour:
 
+```js
     var idFSM = require('id-fsm');
 
     var loggingMiddleware = function(options) {
@@ -175,3 +180,4 @@ a state to decorate that state with behaviour:
     trafficLight.trigger('goGreen');
     trafficLight.trigger('goOrange');
     trafficLight.trigger('goRed');
+```
