@@ -42,9 +42,9 @@ Small Finite State Machine implementation using LiveScript mainly for controllin
       }
     });
 
-    trafficLight.on('transitioned', function(from, to) {
-      console.log(from, to);
-    });
+    trafficLight.on('Red',    function() { console.log('Red');    });
+    trafficLight.on('Orange', function() { console.log('Orange'); });
+    trafficLight.on('Green',  function() { console.log('Green');  });
 
     trafficLight.trigger('goGreen');
     trafficLight.trigger('goOrange');
@@ -96,6 +96,10 @@ the state, it will call it before entering and after leaving the state.
         }
       }
     });
+
+    trafficLight.on('Red',    function() { console.log('Red');    });
+    trafficLight.on('Orange', function() { console.log('Orange'); });
+    trafficLight.on('Green',  function() { console.log('Green');  });
 
     trafficLight.trigger('goGreen');
     trafficLight.trigger('goOrange');
@@ -163,6 +167,10 @@ a state to decorate that state with behaviour:
         },
       }
     });
+
+    trafficLight.on('Red',    function() { console.log('Red');    });
+    trafficLight.on('Orange', function() { console.log('Orange'); });
+    trafficLight.on('Green',  function() { console.log('Green');  });
 
     trafficLight.trigger('goGreen');
     trafficLight.trigger('goOrange');

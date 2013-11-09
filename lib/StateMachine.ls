@@ -42,9 +42,6 @@ export class StateMachine extends EventEmitter
   # Leaves the current state, sets the current state to the new state and
   # enters the new state.
   transition: (name) !->
-    previous-state-name = @current-state.name
-
     <~! @_leave-state @current-state
     <~! @_enter-state @states[name]
-
-    @emit 'transitioned', previous-state-name, name
+    @emit name
