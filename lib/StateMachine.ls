@@ -1,68 +1,50 @@
 { EventEmitter } = require 'events'
 { State }        = require './State'
 
-#log = console~log
-
 export class StateMachine extends EventEmitter
   (options) ->
     @states = {}
 
+    # TODO: Document the attach-target
     if options.attach-target?
       @attach-target = options.attach-target
 
+    # Add all states defined in the options.
     for k, v of options.states
       if @attach-target?
         v.attach-target = @attach-target
 
       @add-state new State this, k, v
 
-    @transition options.initial-state
+    # Enter the initial state
+    <~! @_enter-state @states[options.initial-state]
+
+  # TODO: Document
+  _enter-state: (state, cb) !->
+    @current-state = state
+    @current-state.once 'entered', cb
+    @current-state.enter!
+
+  # TODO: Document
+  _leave-state: (fsm, cb) !->
+    @current-state.once 'left', cb
+    @current-state.leave!
 
   # Adds a State to the StateMachine.
-  #
-  # add-state :: State -> Undefined
-  #
   add-state: (state) !->
-    #log 'StateMachine#add-state', state.name
-
     @states[state.name] = state
 
   # Calls the trigger function on the current state.
-  #
-  # trigger :: String -> ... -> Undefined
-  #
   trigger: (event, ...args) !->
-    #log 'StateMachine#trigger', event, ...args
-
     current-state = @states[@current-state.name]
     current-state.trigger event, ...args
 
-  # Leaves the current state, sets the current state to the new state and enters
-  # the new state.
-  #
-  # transition :: String -> Undefined
-  #
+  # Leaves the current state, sets the current state to the new state and
+  # enters the new state.
   transition: (name) !->
-    #log 'StateMachine#transition', name
+    previous-state-name = @current-state.name
 
-    enter = (cb) !~>
-      @current-state = @states[name]
+    <~! @_leave-state @current-state
+    <~! @_enter-state @states[name]
 
-      @current-state.once 'entered', !~>
-        @emit 'transitioned', name
-
-      @current-state.enter!
-
-    leave = (cb) !~>
-      @current-state.once 'left', !~>
-        @emit 'transitioned', name
-
-        cb!
-
-      @current-state.leave!
-
-    if @current-state?
-      <~! leave
-      enter!
-    else
-      enter!
+    @emit 'transitioned', previous-state-name, name
