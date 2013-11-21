@@ -28,6 +28,7 @@ export class StateMachine extends EventEmitter
   # TODO: Document
   _leave-state: (fsm, cb) !->
     @current-state.once 'left', cb
+
     @current-state.leave!
 
   # Adds a State to the StateMachine.
@@ -37,6 +38,7 @@ export class StateMachine extends EventEmitter
   # Calls the trigger function on the current state.
   trigger: (event, ...args) !->
     current-state = @states[@current-state.name]
+
     current-state.trigger event, ...args
 
   # Leaves the current state, sets the current state to the new state and
@@ -44,4 +46,5 @@ export class StateMachine extends EventEmitter
   transition: (name) !->
     <~! @_leave-state @current-state
     <~! @_enter-state @states[name]
+    @emit 'state', name
     @emit name
