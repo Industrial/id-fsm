@@ -31,7 +31,7 @@ export class State extends EventEmitter
       for k, v of @events
         @attach-target[k] = v
 
-    <~! async.series @enter-middleware
+    <~! async.series @enter-middleware.reverse!
 
     @emit 'entered'
 
